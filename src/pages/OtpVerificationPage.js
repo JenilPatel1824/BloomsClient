@@ -25,7 +25,7 @@ const OtpVerificationPage = ({ username, password }) => {
       });
 
       const data=await response.json();
-      if(response.status==601){
+      if(response.status==200){
         // TODO: Handle success, e.g., redirect to another page
        // console.log('OTP verified successfully');
         console.log(data.msg);
