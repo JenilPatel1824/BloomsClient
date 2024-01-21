@@ -1,0 +1,24 @@
+/* Signin.css */
+
+.gradient-background {
+    background: linear-gradient(to right top, #003366, #006699, #00a1cc, #00c2ff, #00e6ff);
+  }
+  
+  .registration-form {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .registration-form:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gradient-button {
+    background: linear-gradient(to right top, #003366, #006699, #00a1cc, #00c2ff, #00e6ff);
+    border: none;
+  }
+  
+  .gradient-button:hover {
+    filter: brightness(1.1);
+  }
+  

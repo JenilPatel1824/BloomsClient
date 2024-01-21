@@ -1,0 +1,78 @@
+/* home.css */
+
+.home-container {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-content {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Add animation styles */
+.animated {
+  animation-duration: 1s;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.features-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.feature {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature:hover {
+  transform: scale(1.05);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Updated Navigation Bar Styles */
+.navbar {
+  background-color: #343a40; /* Change the background color */
+}
+
+.navbar-brand {
+  color: #fff; /* Change the text color */
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+  color: #fff; /* Change the text color */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #17a2b8; /* Change the hover color */
+}
+

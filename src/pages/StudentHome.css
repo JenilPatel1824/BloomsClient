@@ -1,0 +1,411 @@
+/* StudentHome.css */
+.student-home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-info {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .student-data-container {
+    margin-top: 20px;
+  }
+  
+  .detailed-marks-container {
+    margin-top: 10px;
+  }
+  
+  .toggle-button {
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .toggle-button:hover {
+    background-color: #2980b9;
+  }
+  
+
+  /* StudentHome.css */
+.student-home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-info {
+    color: #333;
+  }
+  
+  .student-data-container {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    color: #007bff;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .detailed-marks-container {
+    margin-top: 20px;
+  }
+  
+  .sessional-section {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add more styling as needed */
+/* StudentHome.css */
+.student-home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-info {
+    color: #333;
+  }
+  
+  .student-data-container {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    color: #007bff;
+  }
+  
+  p {
+    margin: 5px 0;
+  }
+  
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .more-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .detailed-marks-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sessional-section {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+  }
+  
+  .sessional-section:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add more styling and effects as needed */
+/* StudentHome.css */
+.student-home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h1 {
+    color: #007bff;
+  }
+  
+  .dashboard-info {
+    color: #555;
+  }
+  
+  .student-data-container {
+    margin-top: 30px;
+  }
+  
+  h2 {
+    color: #007bff;
+  }
+  
+  p {
+    margin: 8px 0;
+    color: #333;
+  }
+  
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .more-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .detailed-marks-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sessional-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+  }
+  
+  .sessional-section:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add more styling and effects as needed */
+  /* StudentData.css */
+
+.student-data-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.data-display {
+  margin-top: 20px;
+}
+
+.data-item {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.data-key {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.data-value {
+  color: #333;
+}
+/* StudentHome.css */
+
+.red-text {
+  color: red;
+  font-weight: bold;
+}
+#red-text {
+  color: red;
+  font-weight: bold;
+}
+
+  /* Button Styles */
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .more-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Styles for the "Practice CO6" button */
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .more-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Styles for the "Practice CO6" button */
+  .more-details-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .more-details-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Styles for the "Practice CO6" button */
+  .practice-button {
+    display: inline-block;
+    padding: 6px 12px; /* Adjust the padding to make it smaller */
+    font-size: 12px;  /* Adjust the font size */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    color: #007bff;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin-left: 10px; /* Add a bit more margin from the left side */
+  }
+  
+  .practice-button:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056b3;
+  }
+  /* StudentHome.css */
+
+.student-data-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.data-display {
+  margin-top: 20px;
+}
+
+.data-item {
+  margin: 10px 0;
+}
+
+.data-key {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.data-value {
+  color: #333;
+}
+
+.red-text {
+  color: red;
+}
+
+.practice-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.practice-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add more styles as needed */
+/* StudentHome.css */
+
+.student-data-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.data-display {
+  margin-top: 20px;
+}
+
+.data-item {
+  margin: 10px 0;
+}
+
+.data-key {
+  font-weight: bold;
+  margin-right: 5px;
+  color: #333;
+}
+
+.data-value {
+  color: #555;
+}
+
+.red-text {
+  color: red;
+}
+
+.practice-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.practice-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add a subtle animation for data items */
+.data-item:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* Add more styles as needed */
+

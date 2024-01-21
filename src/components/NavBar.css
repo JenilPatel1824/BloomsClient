@@ -1,0 +1,93 @@
+Navbar.css
+
+.navbar {
+    background-color: #04192f; /* Light background color */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    color: #343a40; /* Navbar brand text color */
+  }
+  
+  .navbar-nav .nav-link {
+    color: #343a40; /* Navbar link text color */
+    background-color: transparent !important; /* Set background color to transparent */
+    border: none !important; /* Remove borders */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #007bff; /* Navbar link text color on hover */
+    background-color: transparent !important; /* Set background color to transparent on hover */
+  }
+  
+  .feature-icon {
+    margin-right: 8px; /* Adjust the margin between icon and text */
+  }
+  /* NavBar.css */
+
+.navbar {
+    background-color: #f8f9fa; /* Light background color */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    color: #343a40; /* Navbar brand text color */
+  }
+  
+  .navbar-nav .nav-item {
+    background-color: transparent !important; /* Set background color to transparent */
+    border: none !important; /* Remove borders */
+  }
+  
+  .navbar-nav .nav-link {
+    color: #343a40; /* Navbar link text color */
+    background-color: transparent !important; /* Set background color to transparent */
+    border: none !important; /* Remove borders */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #f0f1f2; /* Navbar link text color on hover */
+    background-color: transparent !important; /* Set background color to transparent on hover */
+  }
+  
+  .feature-icon {
+    margin-right: 8px; /* Adjust the margin between icon and text */
+  }
+  
+  /* Add any additional styling based on your design requirements */
+  
+  /* Add any additional styling based on your design requirements */
+  /* NavBar.css */
+
+.navbar {
+    background-color: #4caf50; /* Green background color */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    color: #fff; /* White text color */
+  }
+  
+  .navbar-nav .nav-item {
+    background-color: #007bff; /* Blue background color for navbar items */
+    border-radius: 5px; /* Add some border-radius for a rounded look */
+  }
+  
+  .navbar-nav .nav-link {
+    color: #fff; /* White text color */
+    padding: 0.5rem 1rem;
+    transition: font-size 0.3s; /* Smooth transition for font size */
+  }
+  
+  .navbar-nav .nav-item:hover .nav-link {
+    font-size: 1.1em; /* Increase text size on hover */
+  }
+  
+  .feature-icon {
+    margin-right: 8px;
+  }
+  
+  /* Add any additional styling based on your design requirements */
+  
