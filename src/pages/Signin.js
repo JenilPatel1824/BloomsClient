@@ -87,11 +87,11 @@ const Signin = () => {
     } else if (res.status === 200) {
       sessionStorage.setItem("authToken", data.authToken);
       navigate("/home");
-    } else if (res.status === 500) {
+    } else if (res.status === 201) {
       luname = data.username;
       sessionStorage.setItem("studentToken", data.studentToken);
       navigate("/student-home");
-    }else if (res.status === 600) {
+    }else if (res.status === 202) {
       console.log("Adminn goted");
       sessionStorage.setItem("adminToken", data.adminToken);
       const otpsender = await fetch(`${process.env.REACT_APP_API_URL}`+"/send-otp", {
