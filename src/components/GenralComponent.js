@@ -100,7 +100,7 @@ const GenralComponent = (option) => {
       formData.append("file", selectedFile);
 
       try {
-        const response2 = await fetch(`"${process.env.REACT_APP_API_URL}`+"/addstudent", {
+        const response2 = await fetch(`${process.env.REACT_APP_API_URL}`+"/addstudent", {
           method: "POST",
           body: formData,
         });
@@ -121,7 +121,7 @@ const GenralComponent = (option) => {
       formData.append("file", selectedFile2);
 
       try {
-        const response3 = await fetch(`"${process.env.REACT_APP_API_URL}`+"/addprofessor", {
+        const response3 = await fetch(`${process.env.REACT_APP_API_URL}`+"/addprofessor", {
           method: "POST",
           body: formData,
         });
@@ -142,7 +142,7 @@ const GenralComponent = (option) => {
       formData.append("file", selectedFile3);
 
       try {
-        const response4 = await fetch(`"${process.env.REACT_APP_API_URL}`+"/addmapping", {
+        const response4 = await fetch(`${process.env.REACT_APP_API_URL}`+"/addmapping", {
           method: "POST",
           body: formData,
         });
@@ -219,7 +219,7 @@ const GenralComponent = (option) => {
     // Call the API endpoint for removing a student using studentId
     try {
         window.confirm("Are you sure to want to delete all student data?????");
-      const response = await fetch(`"${process.env.REACT_APP_API_URL}`+"/removeallstudent", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}`+"/removeallstudent", {
         method: "post",
       });
 
@@ -234,7 +234,7 @@ const GenralComponent = (option) => {
     // Call the API endpoint for removing a student using studentId
     try {
         window.confirm("Are you sure to want to delete all students Roll number entry?????");
-      const response = await fetch(`"${process.env.REACT_APP_API_URL}`+"/removealldsem", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}`+"/removealldsem", {
         method: "post",
       });
 
@@ -251,7 +251,7 @@ const GenralComponent = (option) => {
     // Call the API endpoint for removing a student using studentId
     try {
         window.confirm("Are you sure to want to delete all student data?????");
-      const response = await fetch(`"${process.env.REACT_APP_API_URL}`+"/removeallprofessor", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}`+"/removeallprofessor", {
         method: "post",
       });
 

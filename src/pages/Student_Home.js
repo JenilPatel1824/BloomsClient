@@ -171,6 +171,8 @@ const assignquestionautomatically = async (sdata) => {
       rollNo: sdata.rollNo,
       requiredco: cocutoffflaga,
     };
+    console.log("before fetch p q");
+    console.log(ssdata);
     console.log('Sending fetchpq request with data:', ssdata);
 
     const res = await fetch(`${process.env.REACT_APP_API_URL}`+"/fetchpracticequestion", {

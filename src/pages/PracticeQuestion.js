@@ -30,7 +30,6 @@ export default function PracticeQuestion() {
         body: JSON.stringify(ssdata),
       });
       const responseData = await res.json();
-      console.log(responseData);
       
       setData(responseData);
       setLoading(false);
