@@ -15,11 +15,13 @@ const features = [
 const Home = () => {
   return (
     <div className="container mt-5 home-container">
+
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             Home
           </Link>
+          
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               {features.map((feature, index) => (
@@ -35,7 +37,6 @@ const Home = () => {
         </div>
       </nav>
       <div className="mt-3 home-content">
-        <h2 className="animated fadeInDown">Welcome to the Home Page</h2>
         <div className="features-container">
           {features.map((feature, index) => (
             <div className="feature" key={index}>

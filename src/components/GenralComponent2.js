@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import './genralComponent2.css';
 
 const GeneralComponent2 = () => {
+
   const [emailBody, setEmailBody] = useState("");
   const [recipients, setRecipients] = useState("");
 
+  
+  
   
 
   const handleEmailBodyChange = (e) => {
@@ -46,7 +49,9 @@ const GeneralComponent2 = () => {
 
   return (
     <div>
+      
       <label className="To-field">
+        <h2>AnnouncementMail</h2>
         To:
         <input
           type="text"

@@ -244,7 +244,6 @@ const ViewSubmissions = () => {
 
       {isShowButtonVisible && (
         <div className="student-information">
-          <h2>Student Information</h2>
           {filterFlaggedStudents().length > 0 ? (
             filterFlaggedStudents().map((student, index) => (
               <div key={`${student.ID}_${index}`} className="student-details">

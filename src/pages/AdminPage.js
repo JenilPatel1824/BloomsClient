@@ -74,12 +74,10 @@ const AdminPage = () => {
   };
 
   const menuIcons = {
-    AddStudent: faUser,
-    AddProfessor: faChalkboardTeacher,
+    ManageStudents: faUser,
+    ManageProfessors: faChalkboardTeacher,
     MapStudent: faChalkboardTeacher,
-    RemoveStudent: faUserSlash,
-    RemoveProfessor: faChalkboardTeacher,
-    DropStudentSemRoll: faChalkboardTeacher,
+    
     AnnouncementMail: faEnvelope,
     Report: faChartBar,
   };
@@ -115,7 +113,6 @@ const AdminPage = () => {
         {selectedOption ? (
           <div className="selected-option">
             {/* Add specific UI or form for the selected option */}
-            <h2>{selectedOption}</h2>
             <GenralComponent option={selectedOption}/>
             
             {/* ... other UI components or forms ... */}
