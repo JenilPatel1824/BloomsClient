@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { luname } from './Signin';
 import './PracticeQuestion.css';
 import { useParams } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 export default function PracticeQuestion() {
   const { subject } = useParams();
@@ -166,7 +168,11 @@ export default function PracticeQuestion() {
     <div className="practice-container">
       <h2>Practice Page</h2>
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+              <div className="loading-overlay">
+                <ClipLoader color="#3498db" loading={loading} size={50} />
+              </div>
+            )}
 
       <div className="select-container">
         {subject && (

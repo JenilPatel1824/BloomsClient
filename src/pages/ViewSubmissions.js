@@ -1,8 +1,9 @@
 // ViewSubmissions.js
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './SubmissionPage.css';
 import Navbar from '../components/NavBar';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ViewSubmissions = () => {
   const [studentData, setStudentData] = useState(null);
@@ -18,9 +19,12 @@ const ViewSubmissions = () => {
   const [remark, setRemark] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
+
+
 
   const handleShowButton = async (sem, subjectName) => {
-    setIsLoading(true);
+    setLoading(true);
 
     const res = await fetch(`${process.env.REACT_APP_API_URL}`+"/geteverythingaboutstudent", {
       method: "POST",
@@ -34,8 +38,24 @@ const ViewSubmissions = () => {
     const data = await res.json();
     setStudentData(data);
     
-    setIsLoading(false);
+    setLoading(false);
   };
+
+
+  useEffect(() => {
+
+    console.log(selectedSubjectCode,selectedSemester);
+    // Fetch data when selectedSem or selectedDepartment changes
+    
+     if(selectedSubjectName && selectedSemester)
+    {
+      handleShowButton(selectedSemester,selectedSubjectName);
+
+    }
+    
+  }, [ selectedSubjectName,selectedSemester]);
+
+  
 
   const semesters = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
@@ -222,11 +242,15 @@ const ViewSubmissions = () => {
           </label>
         )}
 
-        {isShowButtonVisible && (
-          <button className="show-button" onClick={() => handleShowButton(selectedSemester, selectedSubjectName)}>
-            Show
-          </button>
-        )}
+        
+
+       
+
+{loading && (
+              <div className="loading-overlay">
+                <ClipLoader color="#3498db" loading={loading} size={50} />
+              </div>
+            )}
 
         {isShowButtonVisible && (
           <div className="search-container">
@@ -243,18 +267,19 @@ const ViewSubmissions = () => {
       </form>
 
       {isShowButtonVisible && (
-        <div className="student-information">
-          {filterFlaggedStudents().length > 0 ? (
-            filterFlaggedStudents().map((student, index) => (
-              <div key={`${student.ID}_${index}`} className="student-details">
-                <p>Name: {student.ID}</p>
-
-                <button
-                  className="details-button"
-                  onClick={() => setShowDetailsIndex(showDetailsIndex === index ? null : index)}
-                >
-                  {showDetailsIndex === index ? 'Hide Details' : 'More Details'}
-                </button>
+  <div className="student-information">
+    {filterFlaggedStudents().length > 0 ? (
+      filterFlaggedStudents().map((student, index) => (
+        <div key={`${student.ID}_${index}`} className="student-details">
+          <div className="student-header">
+            <button
+              className="expand-button"
+              onClick={() => setShowDetailsIndex(showDetailsIndex === index ? null : index)}
+            >
+              {showDetailsIndex === index ? '-' : '+'}
+            </button>
+            <p>Name: {student.ID}</p>
+          </div>
 
                 {showDetailsIndex === index && (
                   <div className="co-details">
