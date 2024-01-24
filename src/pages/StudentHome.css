@@ -409,3 +409,43 @@
 
 /* Add more styles as needed */
 
+right-oriented-logout-button {
+  display: flex;
+  align-items: center;
+  background-color: #3498db;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.right-oriented-logout-button:hover {
+  background-color: #2980b9;
+}
+
+.right-oriented-logout-button span {
+  margin-left: 10px;
+}
+.right-oriented-logout-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #3498db;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 999;
+  margin-right: 320px;
+  margin-bottom: 100px;
+  margin-top: -5px;
+   /* Ensure the button is on top of other elements */
+}
+
+.right-oriented-logout-button:hover {
+  background-color: #2980b9;
+}

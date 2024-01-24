@@ -104,7 +104,7 @@ const GenralComponent = (option) => {
   const handleDownloadSample2 = async () => {
     try {
       const response = await fetch(
-        `"${process.env.REACT_APP_API_URL}` +
+        `${process.env.REACT_APP_API_URL}` +
           "/downloadsamplefile/Upload_Professor_Sample.xlsx"
       );
 
@@ -125,7 +125,7 @@ const GenralComponent = (option) => {
   const handleDownloadSample3 = async () => {
     try {
       const response = await fetch(
-        `"${process.env.REACT_APP_API_URL}` +
+        `${process.env.REACT_APP_API_URL}` +
           "/downloadsamplefile/Upload_Mapping_Sample.xlsx"
       );
 

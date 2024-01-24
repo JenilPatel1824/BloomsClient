@@ -1,12 +1,18 @@
 // Student_Home.js
+import axios from 'axios';
+
 import { luname } from './Signin';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Loader from './Loader';
 import React, { useState, useEffect } from 'react';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './StudentHome.css';
 let cutoffmarkso={};
 let cocutoffflaga=[];
+
 // for(let x=0;x<6;x++)
 // {
 //   cocutoffflaga[x]=false;
@@ -265,10 +271,32 @@ const assignquestionautomatically = async (sdata) => {
       [subject]: !prevDetails[subject],
     }));
   };
+  const handleStudentLogout = async () => {
+    try {
+      const studentToken = sessionStorage.getItem('studentToken'); // Get the authToken from sessionStorage
+      await axios.post(`${process.env.REACT_APP_API_URL}/slogout`, null, {
+        headers: {
+          Authorization: `Bearer ${studentToken}`, // Add the token to the headers
+        },
+      });
+  
+      sessionStorage.removeItem('studentToken'); // Clear the authToken from sessionStorage
+  
+      // Redirect or perform other actions after logout
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   return (
     <div className="student-data-container">
       <h1>Student Data</h1>
+      <div>
+      <button className="right-oriented-logout-button" onClick={handleStudentLogout}>
+      <FontAwesomeIcon icon={faSignOutAlt} />
+      <span> Logout</span>
+    </button>    </div>
 
       
       {studentData && (

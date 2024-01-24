@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   faUser,
   faChalkboardTeacher,
@@ -86,8 +89,37 @@ const AdminPage = () => {
     setMenuVisible(!menuVisible);
   };
 
+  const handleLogout = async () => {
+    try {
+      const adminToken = sessionStorage.getItem('adminToken'); // Get the authToken from sessionStorage
+      await axios.post(`${process.env.REACT_APP_API_URL}/alogout`, null, {
+        headers: {
+          Authorization: `Bearer ${adminToken}`, // Add the token to the headers
+        },
+      });
+  
+      sessionStorage.removeItem('adminToken'); // Clear the authToken from sessionStorage
+  
+      // Redirect or perform other actions after logout
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
+    <div>
+  <button className="right-oriented-logout-button" onClick={handleLogout}>
+      <FontAwesomeIcon icon={faSignOutAlt} />
+      <span> Logout</span>
+    </button>
+
+
+
+
+
     <div className="admin-page">
+      
       <div className="menu-toggle" onClick={toggleMenu}>
         <div className="bar"></div>
         <div className="bar"></div>
@@ -125,6 +157,7 @@ const AdminPage = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

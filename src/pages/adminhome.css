@@ -153,4 +153,35 @@ h2 {
   margin-left: 5px;
 }
 
+.right-oriented-logout-button {
+  float: right; /* or use text-align: right; */
+}
+/* Add this CSS to your stylesheets */
+
+.right-oriented-logout-button {
+  
+  float: right; /* or use text-align: right; */
+
+}
+
+.right-oriented-logout-button {
+  display: flex;
+  align-items: center;
+  background-color: #3498db;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.right-oriented-logout-button:hover {
+  background-color: #2980b9;
+}
+
+.right-oriented-logout-button span {
+  margin-left: 10px;
+}
+
+
 /* Other styles remain unchanged */
