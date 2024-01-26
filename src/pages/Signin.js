@@ -7,6 +7,8 @@ import { BiUser, BiLock } from "react-icons/bi";
 import ReCAPTCHA from "react-google-recaptcha"; // Import Google reCAPTCHA
 import "./Signin.css";
 
+
+
 let luname = null;
 
 const Signin = () => {
@@ -17,7 +19,7 @@ const Signin = () => {
     username: "",
     password: "",
   });
-  const [captchaValue, setCaptchaValue] = useState(null);
+  const [captchaValue, setCaptchaValue] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const slideIn = useSpring({
@@ -49,6 +51,8 @@ const Signin = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [location.state]);
+
+
 
   const handleInputs = (e) => {
     const { name, value } = e.target;
@@ -168,11 +172,12 @@ const Signin = () => {
                 </Grid>
               </Grid>
 
-              {/* Google reCAPTCHA */}
+              {/* Google reCAPTCHA 
               <ReCAPTCHA
                 sitekey="6LeivlUpAAAAAErzcS9Sr7C3HvwXmbxYfIfO8JOX"
                 onChange={(value) => setCaptchaValue(value)}
               />
+                  */}
 
               <Button
                 type="submit"

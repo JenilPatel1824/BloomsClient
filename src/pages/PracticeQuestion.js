@@ -3,7 +3,9 @@ import { luname } from './Signin';
 import './PracticeQuestion.css';
 import { useParams } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import axios from 'axios';
 
+let LOGOUT_TIME=300000;
 
 export default function PracticeQuestion() {
   const { subject } = useParams();
@@ -64,6 +66,40 @@ export default function PracticeQuestion() {
       setSelectedQuestions([]);
     }
   }, [subject, selectedCO, data]);
+
+   
+  useEffect(() => {
+    
+
+    const pollingInterval = LOGOUT_TIME;
+
+    // Setup polling with setInterval
+    const intervalId = setInterval(() => {
+      handleLogout(); // Fetch data at regular intervals
+    }, pollingInterval);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []); 
+
+
+  const handleLogout = async () => {
+    try {
+      const studentToken = sessionStorage.getItem('studentToken'); // Get the authToken from sessionStorage
+      await axios.post(`${process.env.REACT_APP_API_URL}/logout`, null, {
+        headers: {
+          Authorization: `Bearer ${studentToken}`, // Add the token to the headers
+        },
+      });
+
+      sessionStorage.removeItem('studentToken'); // Clear the authToken from sessionStorage
+
+      // Redirect or perform other actions after logout
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   const handleButtonClick = () => {
     // Resetting previous status

@@ -10,6 +10,14 @@
   width: 180px; /* Slightly narrower width */
   display: flex;
   flex-direction: column;
+  height: auto;
+  flex-direction: column;
+  transition: height 0.3s ease; /* Add a transition effect for smooth changes in height */
+  height: 1000px;
+  top: 0;
+  left: 0;
+  bottom: 0; /* Stretch the side menu to the bottom of the viewport */
+  overflow-y: auto;
 }
 
 .menu-item {
@@ -184,4 +192,76 @@ h2 {
 }
 
 
+
 /* Other styles remain unchanged */
+/* DepartmentForm.css */
+
+.department-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.semester-column {
+  flex: 1;
+}
+
+.semester-column:first-child {
+  margin-right: 20px;
+}
+
+.department-form {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.department-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.department-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.department-form button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.department-form button:hover {
+  background-color: #45a049;
+}
+
+.add-department-button {
+  margin-top: 20px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-department-button:hover {
+  background-color: #2980b9;
+}

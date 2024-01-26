@@ -12,6 +12,8 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './StudentHome.css';
 let cutoffmarkso={};
 let cocutoffflaga=[];
+let LOGOUT_TIME=300000;
+
 
 // for(let x=0;x<6;x++)
 // {
@@ -34,6 +36,8 @@ const Student_Home = () => {
       }
     };
 
+    
+
 
     const fetchData = async () => {
       try {
@@ -53,6 +57,55 @@ const Student_Home = () => {
 
     fetchData(); // Fetch data when the component mounts
   }, []);
+
+  
+  useEffect(() => {
+    
+
+    const pollingInterval = LOGOUT_TIME;
+
+    // Setup polling with setInterval
+    const intervalId = setInterval(() => {
+      handleLogout(); // Fetch data at regular intervals
+    }, pollingInterval);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []); 
+
+  const handleLogout = async () => {
+    try {
+      const studentToken = sessionStorage.getItem('studentToken'); // Get the authToken from sessionStorage
+      await axios.post(`${process.env.REACT_APP_API_URL}/logout`, null, {
+        headers: {
+          Authorization: `Bearer ${studentToken}`, // Add the token to the headers
+        },
+      });
+
+      sessionStorage.removeItem('studentToken'); // Clear the authToken from sessionStorage
+
+      // Redirect or perform other actions after logout
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+  window.addEventListener('beforeunload', async (event) => {
+    // Perform logout actions when the user is leaving the page
+    event.preventDefault();
+    
+    try {
+      await handleLogout();
+    } catch (error) {
+      // Handle errors, if any
+    }
+  
+    // Standard for most browsers
+    delete event['returnValue'];
+    // For some older browsers
+    return;
+  });
+
 
 
    const navigate = useNavigate();
