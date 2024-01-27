@@ -82,7 +82,7 @@ const DepartmentForm = () => {
   const handleDepartmentClick = async (department) => {
     try {
       // Fetch data for the selected department
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/department/${department}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/departments/${department}`);
       setSelectedDepartment(response.data);
     } catch (error) {
       // Handle error
