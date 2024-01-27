@@ -35,6 +35,7 @@ const OtpVerificationPage = ({ username, password }) => {
 
       const data = await response.json();
       if (response.status === 200) {
+       sessionStorage.setItem("adminToken", data.adminToken);
 
         // Handle success
         setIsSuccess(true);

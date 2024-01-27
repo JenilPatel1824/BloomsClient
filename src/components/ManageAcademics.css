@@ -104,6 +104,11 @@
     background-color: #2980b9;
   }
   
+  .custom-selected-department {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
   
   
   

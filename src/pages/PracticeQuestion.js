@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from 'axios';
 
-let LOGOUT_TIME=300000;
+let LOGOUT_TIME=3600000;
 
 export default function PracticeQuestion() {
   const { subject } = useParams();

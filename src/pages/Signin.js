@@ -97,7 +97,7 @@ const Signin = () => {
       navigate("/student-home");
     }else if (res.status === 202) {
       console.log("Adminn goted");
-       sessionStorage.setItem("adminToken", data.adminToken);
+       sessionStorage.setItem("otpverifytoken", data.otpverifytoken);
       const otpsender = await fetch(`${process.env.REACT_APP_API_URL}`+"/send-otp", {
         method: "POST",
         headers: { "Content-type": "application/json" },

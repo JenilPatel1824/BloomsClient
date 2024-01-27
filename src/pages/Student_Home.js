@@ -12,7 +12,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './StudentHome.css';
 let cutoffmarkso={};
 let cocutoffflaga=[];
-let LOGOUT_TIME=300000;
+let LOGOUT_TIME=3600000;
 
 
 // for(let x=0;x<6;x++)
@@ -191,7 +191,7 @@ const checkerforautomatic = async (sdata) => {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
-
+      
       const data = await res.json();
       console.log('Received response from checkerforfunctioncall:', data);
 

@@ -4,6 +4,8 @@ import React, { useState,useEffect } from 'react';
 import './SubmissionPage.css';
 import Navbar from '../components/NavBar';
 import ClipLoader from "react-spinners/ClipLoader";
+import { jwtDecode } from 'jwt-decode';
+
 
 const ViewSubmissions = () => {
   const [studentData, setStudentData] = useState(null);
@@ -21,15 +23,79 @@ const ViewSubmissions = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [departments, setDepartments] = useState({});
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedSem, setSelectedSem] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [username, setUsername] = useState('');
+
+
+  useEffect(() => {
+    // Get the token from where you have stored it (e.g., localStorage, cookies)
+    const token = sessionStorage.getItem('authToken'); // Change this according to your storage method
+
+    if (token) {
+      // Decode the token
+      const decodedToken = jwtDecode(token);
+
+      // Access the username from the decoded token
+      const { username } = decodedToken.user;
+
+      // Set the username in the component state
+      setUsername(username);
+      console.log("usernameeee: "+username);
+    }
+  }, []);
+
+
+
+  useEffect(() => {
+    // Fetch departments data when component mounts
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-details`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setDepartments(data.departments);
+        } else {
+          console.error('Error fetching departments:', data.error);
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
+  const handleDepartmentChange = (event) => {
+    const department = event.target.value;
+    setSelectedDepartment(department);
+    setSelectedYear('');
+    setSelectedSubject('');
+    setSelectedSem('');
+  };
+
+  const handleYearChange = (event) => {
+    const year = event.target.value;
+    setSelectedYear(year);
+  };
+
+ 
+
 
 
   const handleShowButton = async (sem, subjectName) => {
     setLoading(true);
+    console.log("called fn");
 
     const res = await fetch(`${process.env.REACT_APP_API_URL}`+"/geteverythingaboutstudent", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
+        selectedDepartment,
         sem,
         subjectName,
       }),
@@ -44,14 +110,20 @@ const ViewSubmissions = () => {
 
   useEffect(() => {
 
+    console.log("selectedthingssssss");
     console.log(selectedSubjectCode,selectedSemester);
     // Fetch data when selectedSem or selectedDepartment changes
     
-     if(selectedSubjectName && selectedSemester)
+     if(selectedSubjectCode && selectedSemester)
     {
-      handleShowButton(selectedSemester,selectedSubjectName);
+      console.log("inside if selected");
+      console.log("usernameeee: "+username);
+
+      handleShowButton(selectedSemester,selectedSubjectCode);
+     
 
     }
+    
     
   }, [ selectedSubjectName,selectedSemester]);
 
@@ -113,6 +185,12 @@ const ViewSubmissions = () => {
     setIsSubjectVisible(Boolean(newSemester));
     setIsShowButtonVisible(false);
     setSearchTerm('');
+
+
+    
+    const sem = event.target.value;
+    setSelectedSem(sem);
+    setSelectedSubject('');
   };
 
   const handleSubjectChange = (event) => {
@@ -124,6 +202,9 @@ const ViewSubmissions = () => {
     setSelectedSubjectName(selectedSubjectName);
     setIsShowButtonVisible(Boolean(selectedSubjectCode));
     setSearchTerm('');
+
+    const subject = event.target.value;
+    setSelectedSubject(subject);
   };
 
   const handleViewSubmission = async (index, selectedSemester, selectedSubjectName, studentName, coItem) => {
@@ -134,7 +215,7 @@ const ViewSubmissions = () => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         semester: selectedSemester,
-        subject: selectedSubjectName,
+        subject: selectedSubjectCode,
         name: studentName,
         co: coItem,
       }),
@@ -163,6 +244,7 @@ const ViewSubmissions = () => {
     setStatusMessage(statusMessage);
   };
 
+
   const handleAcceptReject = async (action, coIndex, coItem, selectedSemester, selectedSubjectName, stdid, remark) => {
     const submissionverifier = await fetch(`${process.env.REACT_APP_API_URL}`+"/verifysubmission", {
       method: "POST",
@@ -172,8 +254,10 @@ const ViewSubmissions = () => {
         remark: remark,
         coItem: coItem,
         sem: selectedSemester,
-        subject: selectedSubjectName,
+        subject: selectedSubjectCode,
         id: stdid,
+        username:username,
+
       }),
     });
 
@@ -216,31 +300,50 @@ const ViewSubmissions = () => {
       <h1 className="page-title">Welcome to the Submission Page</h1>
 
       <form className="submission-form" onSubmit={(e) => e.preventDefault()}>
-        <label>
-          Select Semester:
-          <select value={selectedSemester} onChange={handleSemesterChange}>
-            <option value="">Select Semester</option>
-            {semesters.map((semester) => (
-              <option key={semester} value={semester}>
-                {semester}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        {isSubjectVisible && (
           <label>
-            Select Subject:
-            <select value={selectedSubjectCode} onChange={handleSubjectChange}>
-              <option value="">Select Subject</option>
-              {Object.entries(subjectsBySemester[selectedSemester] || {}).map(([key, value]) => (
-                <option key={key} value={key}>
-                  {value}
+            Select Department:
+            <select value={selectedDepartment} onChange={handleDepartmentChange}>
+              <option value="">Select Department</option>
+              {Object.keys(departments).map((department) => (
+                <option key={department} value={department}>
+                  {department}
                 </option>
               ))}
             </select>
           </label>
-        )}
+
+        
+
+{selectedDepartment && (
+            <label>
+              Select Semester:
+              <select value={selectedSem} onChange={handleSemesterChange}>
+                <option value="">Select Semester</option>
+                {Array.from({ length: 8 }, (_, i) => i + 1).map((semester) => (
+                  <option key={semester} value={semester}>
+                    {semester}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+
+          {selectedSem &&
+            selectedDepartment &&
+            departments[selectedDepartment]?.[selectedSem] && (
+              <label>
+                Select Subject:
+                <select value={selectedSubject} onChange={handleSubjectChange}>
+                  <option value="">Select Subject</option>
+                  {departments[selectedDepartment][selectedSem].map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+
 
         
 

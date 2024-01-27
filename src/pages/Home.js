@@ -8,7 +8,7 @@ import './home.css';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Import the ExitToApp icon
-let LOGOUT_TIME=300000;
+let LOGOUT_TIME=3600000;
 
 // Define features data
 const features = [

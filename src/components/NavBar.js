@@ -7,7 +7,7 @@ import { faUpload, faEye, faChartBar, faQuestion,faSignOutAlt } from '@fortaweso
 import '../components/NavBar.css';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-let LOGOUT_TIME=300000;
+let LOGOUT_TIME=3600000;
 
 
 

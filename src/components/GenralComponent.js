@@ -45,6 +45,9 @@ const GenralComponent = (option) => {
   const [dsemDetails, setdsemDetails] = useState(null); // New state for student details
   const [studentData, setStudentData] = useState(null);
 
+  const [departments, setDepartments] = useState({});
+  const [selectedSubject, setSelectedSubject] = useState('');
+
   console.log(option.option);
 
   useEffect(() => {
@@ -61,6 +64,8 @@ const GenralComponent = (option) => {
     }
     
   }, [ selectedDepartmentp]);
+
+
 
   useEffect(() => {
     // Fetch data when selectedSem or selectedDepartment changes
@@ -505,6 +510,47 @@ const GenralComponent = (option) => {
   };
 
 
+  const handleDepartmentChange = (event) => {
+    const department = event.target.value;
+    setSelectedDepartment(department);
+    setSelectedSubject('');
+    setSelectedSem('');
+  };
+
+  const handleDepartmentChangem = (event) => {
+    const department = event.target.value;
+    setSelectedDepartmentm(department);
+    setSelectedSubject('');
+    setSelectedSem('');
+  };
+  const handleDepartmentChangep = (event) => {
+    const department = event.target.value;
+    console.log("professor dep: "+department);
+    setSelectedDepartmentp(department);
+    
+  };
+
+  
+  useEffect(() => {
+    // Fetch departments data when component mounts
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-details`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setDepartments(data.departments);
+        } else {
+          console.error('Error fetching departments:', data.error);
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
 
 
   return (
@@ -516,11 +562,17 @@ const GenralComponent = (option) => {
             <h2>{option.option}</h2>
             {/* Dropdowns for selecting sem and department */}
             <div className="dropdown-student">
-              <select onChange={(e) => setSelectedDepartment(e.target.value)}>
-                <option value="">Select Department</option>
-                <option value="IT">IT</option>
-                <option value="CE">CE</option>
-              </select>
+            <label>
+            Select Department:
+            <select value={selectedDepartment} onChange={handleDepartmentChange}>
+              <option value="">Select Department</option>
+              {Object.keys(departments).map((department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
+          </label>
               {/* {selectedDepartment && (
                 <select onChange={(e) => setSelectedSem(e.target.value)}>
                   <option value="">Select Sem</option>
@@ -591,7 +643,7 @@ const GenralComponent = (option) => {
                     {student.showDetails && (
                       <div className="student-details">
                         <div>Name: {student.name}</div>
-                        <div>Password: {student.password}</div>
+                       {/* <div>Password: {student.password}</div>*/}
                         <div>Email: {student.email}</div>
                         <div>Mobile No: {student.mobile_no}</div>
                         {/* Add more details as needed */}
@@ -634,11 +686,17 @@ const GenralComponent = (option) => {
 
             {/* Dropdowns for selecting sem and department */}
             <div className="dropdown-student">
-              <select onChange={(e) => setSelectedDepartmentp(e.target.value)}>
-                <option value="">Select Department</option>
-                <option value="IT">IT</option>
-                <option value="CE">CE</option>
-              </select>
+            <label>
+            Select Department:
+            <select value={selectedDepartmentp} onChange={handleDepartmentChangep}>
+              <option value="">Select Department</option>
+              {Object.keys(departments).map((department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
+          </label>
              
             </div>
             {loading && (
@@ -663,7 +721,7 @@ const GenralComponent = (option) => {
                 .filter((professor) =>
                   professor.username
                     .toLowerCase()
-                    .includes(searchUsernampe.toLowerCase())
+                    .includes(searchUsername.toLowerCase())
                 )
                 .map((professor, index) => (
                   <div key={professor.username} className="student-container">
@@ -700,7 +758,7 @@ const GenralComponent = (option) => {
                     {professor.showDetails && (
                       <div className="student-details">
                         <div>Name: {professor.name}</div>
-                        <div>Password: {professor.password}</div>
+                       {/* <div>Password: {professor.password}</div>*/}
                         <div>Email: {professor.email}</div>
                         <div>Mobile No: {professor.mobile_no}</div>
                         {/* Add more details as needed */}
@@ -746,12 +804,17 @@ const GenralComponent = (option) => {
 
             {/* Dropdowns for selecting sem and department */}
             <div className="dropdown-student">
-              <select onChange={(e) => setSelectedDepartmentm(e.target.value)}>
-                <option value="">Select Department</option>
-                <option value="IT">IT</option>
-                <option value="CE">CE</option>
-              </select>
-               {selectedDepartmentm && (
+            
+            <select value={selectedDepartmentm} onChange={handleDepartmentChangem}>
+              <option value="">Select Department</option>
+              {Object.keys(departments).map((department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
+         
+          {selectedDepartmentm && (
                 <select onChange={(e) => setSelectedSemm(e.target.value)}>
                   <option value="">Select Sem</option>
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (

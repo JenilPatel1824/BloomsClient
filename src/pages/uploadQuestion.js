@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './FileUpload.css';
 import Navbar from '../components/NavBar';
 
@@ -8,66 +8,45 @@ export default function UploadQuestion() {
   const [selectedSem, setSelectedSem] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCO, setSelectedCO] = useState('');
-  
+  const [departments, setDepartments] = useState({});
+  const [selectedYear, setSelectedYear] = useState('');
+
   
 
-  const subjects = {
-    IT: {
-      '1': {
-        'subject1': 'Mathematics 1',
-        'subject2': 'BEE',
-        'subject3': 'PPS1',
-      },
-      '2': {
-        'subject1': 'Mathematics 2',
-        'subject2': 'PPS 2',
-        'subject3': 'Physics',
-      },
-      '3': {
-        'subject1': 'PTS',
-        'subject2': 'CS',
-        'subject3': 'DDC',
-        'subject4': 'OOPJ',
-        'subject5': 'DSA',
-      },
-      '4': {
-        'subject1': 'DM',
-        'subject2': 'CCN',
-        'subject3': 'DBMS',
-        'subject4': 'DAA',
-        'subject5': 'MAPI',
-      },
-      '5': {
-        'subject1': 'TAFL',
-        'subject2': 'AJT',
-        'subject3': 'SE',
-        'subject4': 'AD',
-      },
-      '6': {
-        'subject1': 'LT',
-        'subject2': 'AOS',
-        'subject3': 'FSD',
-      },
-      '7': {
-        'subject1': 'ML',
-        'subject2': 'ADOS',
-        'subject3': 'WT',
-      },
-      '8': {
-        'subject1': 'Industrial Training',
-      },
-    },
-    CE: {
-      // Define subjects for CE department and sem here
-    },
-  };
 
+  useEffect(() => {
+    // Fetch departments data when component mounts
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get-details`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setDepartments(data.departments);
+        } else {
+          console.error('Error fetching departments:', data.error);
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+  
+
+ 
   const handleDepartmentChange = (event) => {
     const department = event.target.value;
     setSelectedDepartment(department);
     setSelectedSem('');
     setSelectedSubject('');
     setSelectedCO('');
+  };
+  const handleYearChange = (event) => {
+    const year = event.target.value;
+    setSelectedYear(year);
+    setSelectedSem('');
   };
 
   const handleSemChange = (event) => {
@@ -162,46 +141,60 @@ export default function UploadQuestion() {
 
       <h1>Question Upload Page</h1>
       <div>
-        <label>Department:</label>
-        <select value={selectedDepartment} onChange={handleDepartmentChange}>
-          <option value="">Select Department</option>
-          <option value="IT">IT</option>
-          <option value="CE">CE</option>
-        </select>
-      </div>
+      <label>Department</label>
 
-      {selectedDepartment && (
-        <div>
-          <label>Sem:</label>
-          <select value={selectedSem} onChange={handleSemChange}>
-            <option value="">Select Sem</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
-        </div>
-      )}
-
-      {selectedSem &&
-        selectedDepartment &&
-        subjects[selectedDepartment]?.[selectedSem] && (
-          <div>
-            <label>Subject:</label>
-            <select value={selectedSubject} onChange={handleSubjectChange}>
-              <option value="">Select Subject</option>
-              {Object.entries(subjects[selectedDepartment][selectedSem]).map(([subjectKey, subjectValue]) => (
-                <option key={subjectKey} value={subjectValue}>
-                  {subjectValue}
+            <select value={selectedDepartment} onChange={handleDepartmentChange}>
+              <option value="">Select Department</option>
+              {Object.keys(departments).map((department) => (
+                <option key={department} value={department}>
+                  {department}
                 </option>
               ))}
             </select>
-          </div>
-        )}
+      </div>
+
+
+     
+
+{selectedDepartment && (
+  <div>
+          <label>Sem</label>
+
+
+            <label>
+              
+              <select value={selectedSem} onChange={handleSemChange}>
+                <option value="">Select Semester</option>
+                {Array.from({ length: 8 }, (_, i) => i + 1).map((semester) => (
+                  <option key={semester} value={semester}>
+                    {semester}
+                  </option>
+                ))}
+              </select>
+            </label>
+            </div>
+          )}
+      
+
+      {selectedSem &&
+            selectedDepartment &&
+            departments[selectedDepartment]?.[selectedSem] && (
+              <div>
+                      <label>Subject</label>
+
+              <label>
+               
+                <select value={selectedSubject} onChange={handleSubjectChange}>
+                  <option value="">Select Subject</option>
+                  {Object.entries(departments[selectedDepartment][selectedSem]).map(([subjectKey, subjectValue]) => (
+                    <option key={subjectKey} value={subjectValue}>
+                      {subjectValue}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              </div>
+            )}
 
       {selectedSubject && (
         <div>

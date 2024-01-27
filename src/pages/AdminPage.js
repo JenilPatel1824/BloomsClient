@@ -16,7 +16,7 @@ import { IoPerson, IoSchool, IoPersonAdd } from 'react-icons/io5';
 import styled from 'styled-components';
 import './adminhome.css';
 import GenralComponent from '../components/GenralComponent';
-let LOGOUT_TIME=300000;
+let LOGOUT_TIME=3600000;
 
 const AdminPage = () => {
   const [menuHeight, setMenuHeight] = useState('auto');

@@ -16,6 +16,7 @@ import PrivateRouteStudent from "./PrivateRouteStudent";
 import PrivateRouteAdmin from "./PrivateRouteAdmin";
 import OtpVerificationPage from "./pages/OtpVerificationPage";
 import AdminPage from "./pages/AdminPage";
+import PrivateRouteOtp from "./PrivateRouteOtp";
 
 
 
@@ -34,7 +35,7 @@ function App() {
         <Route path="/practice-questions" element={<PrivateRouteStudent element={<PracticeQuestion />} />} /> 
         <Route path="/practice-questions/:subject" element={<PrivateRouteStudent element={<PracticeQuestion />} />} />
         <Route path="/student-home" element={<PrivateRouteStudent element={<Student_Home />} />} />
-        <Route path="/admin-otp-verification" element={<PrivateRouteAdmin element={<OtpVerificationPage />} />} />
+        <Route path="/admin-otp-verification" element={<PrivateRouteOtp element={<OtpVerificationPage />} />} />
         <Route path="/admin-home" element={<PrivateRouteAdmin element={<AdminPage />} />} />
 
 
