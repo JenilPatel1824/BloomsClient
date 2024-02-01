@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./genralComponent.css";
 import GenralComponent2 from "./GenralComponent2";
 import ManageAcademics from "./ManageAcademics";
+import ClearEverything from "./ClearEverything";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
 
@@ -933,6 +934,11 @@ const GenralComponent = (option) => {
       {option.option === "ManageAcademics" && (
         <>
           <ManageAcademics option={(option = option.option)} />
+        </>
+      )}
+      {option.option === "ClearEverything" && (
+        <>
+          <ClearEverything option={(option = option.option)} />
         </>
       )}
     </div>

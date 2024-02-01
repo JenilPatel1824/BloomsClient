@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt,faTrash } from '@fortawesome/free-solid-svg-icons';
 import  { keyframes } from 'styled-components';
+import { FaChevronDown, FaChevronUp,FaTrash } from 'react-icons/fa';
+
 
 import {
   faUser,
@@ -114,6 +116,7 @@ const AdminPage = () => {
     AnnouncementMail: faEnvelope,
     Report: faChartBar,
     ManageAcademics:faBook,
+    ClearEverything: faTrash,
 
   };
 
@@ -277,11 +280,70 @@ const TotalUsers = styled.div`
               )}
             </div>
           ) : (
-            <div className="default-content">
-              <h1>Welcome to the Admin Dashboard</h1>
-              <p>Manage your educational institution efficiently with ease!</p>
-              <p>Select an option from the menu to get started!</p>
-            </div>
+            <div style={{ textAlign: 'center', padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: 'auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+  <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '20px' }}>Preferred Order to Use Website</h1>
+  <p style={{ fontSize: '18px', marginBottom: '30px' }}>
+    Welcome to the Admin Dashboard. Manage your educational institution efficiently with ease! Follow the steps below to get started:
+  </p>
+
+  {/* Admin Actions */}
+  <div style={{ marginBottom: '30px' }}>
+    <p style={{ fontSize: '18px', marginBottom: '25px' }}>
+      Take control of your institution by performing these essential administrative tasks:
+    </p>
+    <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-building"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>1.Add Department</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-user-tie"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>2.Add Professors</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-user-graduate"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>3.Add Students</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-link"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>4.Add Mapping</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Professors Actions */}
+  <div style={{ marginBottom: '30px' }}>
+    <p style={{ fontSize: '18px', marginBottom: '25px' }}>
+      Empower your teaching staff with these professor-specific actions:
+    </p>
+    <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-question-circle"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>1.Add Questions</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-pen"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>2.Add Marks</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-file-alt"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>3.View Submissions</p>
+      </div>
+      <div style={{ textAlign: 'center', flexBasis: '45%', margin: '20px 0' }}>
+        <span style={{ fontSize: '24px' }}><i className="fas fa-check"></i></span>
+        <p style={{ fontSize: '16px', marginTop: '15px', fontWeight: 'bold' }}>4.Verify Submissions</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Admin Full Control */}
+  <div>
+    <p style={{ fontSize: '18px', marginBottom: '25px' }}>
+      Your one-stop control center for overseeing all activities. Enjoy the convenience of one-click whole reset!
+    </p>
+  </div>
+</div>
+
           )}
         </div>
       </div>

@@ -17,9 +17,7 @@ import PrivateRouteAdmin from "./PrivateRouteAdmin";
 import OtpVerificationPage from "./pages/OtpVerificationPage";
 import AdminPage from "./pages/AdminPage";
 import PrivateRouteOtp from "./PrivateRouteOtp";
-
-
-
+import DepartmentDataComponent from "./pages/QuestionBank"
 
 
 function App() {
@@ -29,6 +27,8 @@ function App() {
       <Route path="/pd" element={<Signin />} />
         <Route path="/login" element={<Signin />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+        <Route path="/question-bank" element={<PrivateRoute element={<DepartmentDataComponent />} />} />
+
         <Route path="/upload-mark-admin" element={<PrivateRoute element={<FileUpload />}/>} />
         <Route path="/upload-question" element={<PrivateRoute element={<UploadQuestion />}/>} /> 
         <Route path="/view-student-submissions" element={<PrivateRoute element={<ViewSubmission /> }/>} />
@@ -37,13 +37,6 @@ function App() {
         <Route path="/student-home" element={<PrivateRouteStudent element={<Student_Home />} />} />
         <Route path="/admin-otp-verification" element={<PrivateRouteOtp element={<OtpVerificationPage />} />} />
         <Route path="/admin-home" element={<PrivateRouteAdmin element={<AdminPage />} />} />
-
-
-
-
-
-
-
 
         <Route path="*" element={<Signin />} />
       </Routes>

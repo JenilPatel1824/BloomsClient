@@ -16,6 +16,8 @@ const features = [
   { title: 'Student Submissions', link: '/view-student-submissions', icon: faEye },
   { title: 'Reports', link: '/reports', icon: faChartBar },
   { title: 'Upload Question', link: '/upload-question', icon: faQuestion },
+  {title: 'Question Bank', link: '/question-bank'},
+
 ];
 
 // Define functional component Home
