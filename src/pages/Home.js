@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,21 +7,46 @@ import { faUpload, faEye, faChartBar, faQuestion, faSignOutAlt } from '@fortawes
 import './home.css';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import UserBadge from '../components/UserBadge';
+import { jwtDecode } from 'jwt-decode';
+
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Import the ExitToApp icon
 let LOGOUT_TIME=3600000;
 
 // Define features data
 const features = [
   { title: 'Upload Marks', link: '/upload-mark-admin', icon: faUpload },
+  {title: 'View Marks', link: '/view-marks',icon: faEye},
+  { title: 'Upload Question', link: '/upload-question', icon: faQuestion },
+  {title: 'Question Bank', link: '/question-bank',icon: faEye},
   { title: 'Student Submissions', link: '/view-student-submissions', icon: faEye },
   { title: 'Reports', link: '/reports', icon: faChartBar },
-  { title: 'Upload Question', link: '/upload-question', icon: faQuestion },
-  {title: 'Question Bank', link: '/question-bank'},
+  
+
 
 ];
 
 // Define functional component Home
 const Home = () => {
+  const [username,setUsername]=useState("None");
+
+  useEffect(() => {
+    // Get the token from where you have stored it (e.g., localStorage, cookies)
+    const token = sessionStorage.getItem('authToken'); // Change this according to your storage method
+
+    if (token) {
+      // Decode the token
+      const decodedToken = jwtDecode(token);
+
+      // Access the username from the decoded token
+      const { username } = decodedToken.user;
+
+      // Set the username in the component state
+      console.log("usernameeee: "+username);
+      setUsername(username);
+    }
+  }, []);
+
 
 
   useEffect(() => {
@@ -112,6 +137,8 @@ const Home = () => {
                 ))}
               </ul>
             </div>
+            <UserBadge username={username} marginRight="10px" marginTop="5px"/>
+
             {/* Logout Button */}
             <div className="ml-auto">
               <Button

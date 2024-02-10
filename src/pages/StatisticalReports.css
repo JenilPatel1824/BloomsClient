@@ -1,0 +1,7 @@
+/* StatisticalReports.css */
+
+#barChartCanvas,
+#doughnutChart {
+  width: 5px; /* Adjust the width as needed */
+  height: 5px; /* Adjust the height as needed */
+}

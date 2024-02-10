@@ -17,7 +17,11 @@ import PrivateRouteAdmin from "./PrivateRouteAdmin";
 import OtpVerificationPage from "./pages/OtpVerificationPage";
 import AdminPage from "./pages/AdminPage";
 import PrivateRouteOtp from "./PrivateRouteOtp";
-import DepartmentDataComponent from "./pages/QuestionBank"
+import DepartmentDataComponent from "./pages/QuestionBank";
+import StatisticalReports from "./pages/StatisticalReports";
+import MarksTable from "./pages/MarksTable";
+
+
 
 
 function App() {
@@ -28,14 +32,19 @@ function App() {
         <Route path="/login" element={<Signin />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
         <Route path="/question-bank" element={<PrivateRoute element={<DepartmentDataComponent />} />} />
-
         <Route path="/upload-mark-admin" element={<PrivateRoute element={<FileUpload />}/>} />
         <Route path="/upload-question" element={<PrivateRoute element={<UploadQuestion />}/>} /> 
         <Route path="/view-student-submissions" element={<PrivateRoute element={<ViewSubmission /> }/>} />
+        <Route path="/reports" element={<PrivateRoute element={<StatisticalReports />}/>} />
+        <Route path="/view-marks" element={<PrivateRoute element={<MarksTable />}/>} />
+
+
         <Route path="/practice-questions" element={<PrivateRouteStudent element={<PracticeQuestion />} />} /> 
         <Route path="/practice-questions/:subject" element={<PrivateRouteStudent element={<PracticeQuestion />} />} />
         <Route path="/student-home" element={<PrivateRouteStudent element={<Student_Home />} />} />
+
         <Route path="/admin-otp-verification" element={<PrivateRouteOtp element={<OtpVerificationPage />} />} />
+
         <Route path="/admin-home" element={<PrivateRouteAdmin element={<AdminPage />} />} />
 
         <Route path="*" element={<Signin />} />

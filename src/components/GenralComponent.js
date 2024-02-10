@@ -8,9 +8,15 @@ import ManageAcademics from "./ManageAcademics";
 import ClearEverything from "./ClearEverything";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
+import { FaEdit, FaTrashAlt, FaCheck,FaTimes } from 'react-icons/fa'; // Import the icons from React Icons
+
+import AdminReport from "./AdminReport";
 
 const GenralComponent = (option) => {
   const fileInputRef = useRef(null);
+  const [editableRow, setEditableRow] = useState(null);
+const [editedData, setEditedData] = useState({}); // To store the edited data
+
 
   const [students, setStudents] = useState([]);
   const [professors, setProfessors] = useState([]);
@@ -23,6 +29,10 @@ const GenralComponent = (option) => {
   const [selectedDepartmentp, setSelectedDepartmentp] = useState("");
   const [selectedSemm, setSelectedSemm] = useState("");
   const [selectedDepartmentm, setSelectedDepartmentm] = useState("");
+
+  const [marksData, setMarksData] = useState([]);
+  const [editableRowId, setEditableRowId] = useState(null);
+
 
 
 
@@ -369,24 +379,11 @@ const GenralComponent = (option) => {
       console.error("Error getting student:", error);
     }
   };
-
-  const handleViewDsem = async () => {
-    // Call the API endpoint for removing a student using studentId
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/viewdsem/${Dsem}`,
-        {
-          method: "post",
-        }
-      );
-
-      const data = await response.json();
-      setdsemDetails(data.number);
-
-      window.alert(data.message);
-    } catch (error) {
-      console.error("Error getting no of students from roll entry:", error);
-    }
+  const handleInputChange = (e, field, id) => {
+    const updatedData = marksData.map((mark) =>
+      mark._id === id ? { ...mark, [field]: e.target.value } : mark
+    );
+    setMarksData(updatedData);
   };
 
   const handleViewProfessor = async () => {
@@ -552,133 +549,199 @@ const GenralComponent = (option) => {
     fetchDepartments();
   }, []);
 
+  const handleEditStudent = (index) => {
+    setStudents((prevStudents) =>
+      prevStudents.map((student, i) =>
+        i === index ? { ...student, isEditing: true } : student
+      )
+    );
+  };
+
+  const handleSaveChanges = async (student) => {
+    try {
+      // Make API call to update the student data
+      const updatedStudent = await updateStudent(student);
+  
+      // Update the local state with the updated student data
+      setStudents((prevStudents) =>
+        prevStudents.map((s) =>
+          s.username === updatedStudent.username ? updatedStudent : s
+        )
+      );
+    } catch (error) {
+      console.error('Error updating student:', error);
+      // Handle error, e.g., display an error message to the user
+    }
+  };
+
+  const updateStudent = async (student) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/students/${student.username}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: student.name,
+        department: student.department,
+        email: student.email,
+        mobile_no: student.mobile_no,
+        Admission_Year: student.Admission_Year,
+      }),
+    });
+  
+    if (!response.ok) {
+      throw new Error(`Failed to update student: ${response.statusText}`);
+    }
+  
+    return response.json();
+  };
+  
+
 
 
   return (
     <div>
       {option.option === "ManageStudents" && (
-        <>
-          <>
-            {" "}
-            <h2>{option.option}</h2>
-            {/* Dropdowns for selecting sem and department */}
-            <div className="dropdown-student">
-            <label>
-            Select Department:
-            <select value={selectedDepartment} onChange={handleDepartmentChange}>
-              <option value="">Select Department</option>
-              {Object.keys(departments).map((department) => (
-                <option key={department} value={department}>
-                  {department}
-                </option>
-              ))}
-            </select>
-          </label>
-              {/* {selectedDepartment && (
-                <select onChange={(e) => setSelectedSem(e.target.value)}>
-                  <option value="">Select Sem</option>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
-                    <option key={sem} value={sem}>
-                      {sem}
-                    </option>
-                  ))}
-                </select>
-              )} */}
-            </div>
-            {loading && (
-              <div className="loading-overlay">
-                <ClipLoader color="#3498db" loading={loading} size={50} />
-              </div>
-            )}
-            {/* Search bar - live search */}
-            <div className="search-bar">
-              <input
-                type="text"
-                value={searchUsername}
-                onChange={(e) => setSearchUsername(e.target.value)}
-                placeholder="Search by username"
-              />
-            </div>
-            {/* Display students */}
-            {students.length === 0 ? (
-              <p>No students found.</p>
-            ) : (
-              students
-                .filter((student) =>
-                  student.username
-                    .toLowerCase()
-                    .includes(searchUsername.toLowerCase())
-                )
-                .map((student, index) => (
-                  <div key={student.username} className="student-container">
-                    <div className="student-header">
-                      {/* Toggle details visibility */}
-                      <button
-                        onClick={() =>
-                          setStudents((prevStudents) =>
-                            prevStudents.map((s) =>
-                              s.username === student.username
-                                ? { ...s, showDetails: !s.showDetails }
-                                : s
-                            )
-                          )
-                        }
-                      >
-                        {student.showDetails ? "-" : "+"}
-                      </button>
+  <>
+    <h2>{option.option}</h2>
 
-                      <div>
-                        {index + 1}. {student.username}
-                      </div>
+    {/* Dropdowns for selecting sem and department */}
+    <div className="dropdown-student">
+      <label>
+        Select Department:
+        <select value={selectedDepartment} onChange={handleDepartmentChange}>
+          <option value="">Select Department</option>
+          {Object.keys(departments).map((department) => (
+            <option key={department} value={department}>
+              {department}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
 
-                      {/* Remove button */}
-                      <button
-                        onClick={() => handleRemoveStudent(student.username)}
-                        className="remove-button"
-                      >
-                        Remove
-                      </button>
-                    </div>
+    {loading && (
+      <div className="loading-overlay">
+        <ClipLoader color="#3498db" loading={loading} size={50} />
+      </div>
+    )}
 
-                    {/* Check if details should be displayed */}
-                    {student.showDetails && (
-                      <div className="student-details">
-                        <div>Name: {student.name}</div>
-                       {/* <div>Password: {student.password}</div>*/}
-                        <div>Email: {student.email}</div>
-                        <div>Mobile No: {student.mobile_no}</div>
-                        {/* Add more details as needed */}
-                      </div>
-                    )}
-                  </div>
-                ))
-            )}
-          </>
-          <div>
-            <button
-              style={{
-                backgroundColor: "#ff4d4d",
-                color: "white",
-                padding: "8px 16px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-              onClick={handleRemoveAllStudent}
-            >
-              Remove All
-            </button>
-          </div>
-          <label className="file-input-button">
-            <input type="file" onChange={handleFileChange} />
-            Add Student
-          </label>
-          <button onClick={handleUpload}>Upload</button>
-          <button className="sample-button" onClick={handleDownloadSample}>
-            Download Sample
-          </button>
-        </>
-      )}
+    {/* Search bar - live search */}
+    <div className="search-bar">
+      <input
+        type="text"
+        value={searchUsername}
+        onChange={(e) => setSearchUsername(e.target.value)}
+        placeholder="Search by username"
+        style={{ padding: '5px' }}
+      />
+    </div>
+
+    {/* Display students in a table */}
+    {students.length > 0 && (
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+        <thead>
+          <tr>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>#</th>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Username</th>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Name</th>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Email</th>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Mobile No</th>
+            <th style={{ border: '1px solid #ddd', padding: '8px' }}>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students
+            .filter((student) =>
+              student.username.toLowerCase().includes(searchUsername.toLowerCase())
+            )
+            .map((student, index) => (
+              <tr key={student.username} style={{ border: '1px solid #ddd' }}>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{index + 1}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{student.username}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{student.name}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{student.email}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{student.mobile_no}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+                  {/* <button
+                    onClick={() =>
+                      setStudents((prevStudents) =>
+                        prevStudents.map((s) =>
+                          s.username === student.username
+                            ? { ...s, showDetails: !s.showDetails }
+                            : s
+                        )
+                      )
+                    }
+                  >
+                    {student.showDetails ? "-" : "+"}
+                  </button> */}
+                  <button
+                    onClick={() => handleRemoveStudent(student.username)}
+                    style={{ background: 'none', color: 'black', border: 'none' }}
+
+                  >
+                                                          <FaTrashAlt style={{ color: 'black' }} /> {/* React Icons trash icon */}
+
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    )}
+
+    <div style={{ margin: '20px 0' }}>
+      <button
+        style={{
+          backgroundColor: '#ff4d4d',
+          color: 'white',
+          padding: '8px 16px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+        onClick={handleRemoveAllStudent}
+      >
+        Remove All
+      </button>
+    </div>
+
+    <label className="file-input-button" style={{ marginRight: '10px' }}>
+      <input type="file" onChange={handleFileChange} />
+      Add Student
+    </label>
+
+    <button
+      onClick={handleUpload}
+      style={{
+        backgroundColor: '#3498db',
+        color: 'white',
+        padding: '8px 16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+      }}
+    >
+      Upload
+    </button>
+    <button
+      className="sample-button"
+      onClick={handleDownloadSample}
+      style={{
+        backgroundColor: '#2ecc71',
+        color: 'white',
+        padding: '8px 16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        marginLeft: '10px',
+      }}
+    >
+      Download Sample
+    </button>
+  </>
+)}
 
       {option.option === "ManageProfessors" && (
         <>
@@ -715,215 +778,216 @@ const GenralComponent = (option) => {
               />
             </div>
             {/* Display students */}
-            {professors.length === 0 ? (
-              <p>No Professors found.</p>
-            ) : (
-              professors
-                .filter((professor) =>
-                  professor.username
-                    .toLowerCase()
-                    .includes(searchUsername.toLowerCase())
-                )
-                .map((professor, index) => (
-                  <div key={professor.username} className="student-container">
-                    <div className="student-header">
-                      {/* Toggle details visibility */}
-                      <button
-                        onClick={() =>
-                          setProfessors((prevProfessors) =>
-                            prevProfessors.map((p) =>
-                              p.username === professor.username
-                                ? { ...p, showDetails: !p.showDetails }
-                                : p
-                            )
-                          )
-                        }
-                      >
-                        {professor.showDetails ? "-" : "+"}
-                      </button>
+    {professors.length === 0 ? (
+      <p>No Professors found.</p>
+    ) : (
+      <table
+        style={{
+          borderCollapse: "collapse",
+          width: "100%",
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>#</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Username</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Email</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Mobile No</th>
+            {/* Add more headers as needed */}
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {professors
+            .filter((professor) =>
+              professor.username.toLowerCase().includes(searchUsername.toLowerCase())
+            )
+            .map((professor, index) => (
+              <tr key={professor.username}>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{index + 1}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{professor.username}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{professor.name}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{professor.email}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{professor.mobile_no}</td>
+                {/* Add more cells as needed */}
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  
+                  <button
+                    onClick={() => handleRemoveProfessor(professor.username)}
+                    style={{ background: 'none', color: 'black', border: 'none' }}
 
-                      <div>
-                        {index + 1}. {professor.username}
-                      </div>
+                  >
+                                      <FaTrashAlt style={{ color: 'black' }} /> {/* React Icons trash icon */}
 
-                      {/* Remove button */}
-                      <button
-                        onClick={() => handleRemoveProfessor(professor.username)}
-                        className="remove-button"
-                      >
-                        Remove
-                      </button>
-                    </div>
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    )}
+    <div>
+      <button
+        style={{
+          backgroundColor: "#ff4d4d",
+          color: "white",
+          padding: "8px 16px",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+        onClick={handleRemoveAllProfessor}
+      >
+        Remove All
+      </button>
+    </div>
+    <label className="file-input-button">
+      <input type="file" onChange={handleFileChange2} />
+      Add Professor
+    </label>
+    <button onClick={handleUpload2}   style={{
+        backgroundColor: '#3498db',
+        color: 'white',
+        padding: '8px 16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+      }}>Upload</button>
+    <button
+      className="sample-button"
+      style={{ marginLeft: "5px" }}
+      onClick={handleDownloadSample2}
+    >
+      Download Sample
+    </button>
+  </>
+  </>
+)}
 
-                    {/* Check if details should be displayed */}
-                    {professor.showDetails && (
-                      <div className="student-details">
-                        <div>Name: {professor.name}</div>
-                       {/* <div>Password: {professor.password}</div>*/}
-                        <div>Email: {professor.email}</div>
-                        <div>Mobile No: {professor.mobile_no}</div>
-                        {/* Add more details as needed */}
-                      </div>
-                    )}
-                  </div>
-                ))
-            )}
-          </>
-          <div>
-            <button
-              style={{
-                backgroundColor: "#ff4d4d",
-                color: "white",
-                padding: "8px 16px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-              onClick={handleRemoveAllProfessor}
-            >
-              Remove All
-            </button>
-          </div>
+{option.option === "MapStudent" && (
+  <>
+    <h2>{option.option}</h2>
 
-          <label className="file-input-button">
-            <input type="file" onChange={handleFileChange2} />
-            Add Professor
-          </label>
-          <button onClick={handleUpload2}>Upload</button>
-          <button className="sample-button" onClick={handleDownloadSample2}>
-            Download Sample
-          </button>
-        </>
+    {/* Dropdowns for selecting sem and department */}
+    <div className="dropdown-student">
+      <select value={selectedDepartmentm} onChange={handleDepartmentChangem}>
+        <option value="">Select Department</option>
+        {Object.keys(departments).map((department) => (
+          <option key={department} value={department}>
+            {department}
+          </option>
+        ))}
+      </select>
+
+      {selectedDepartmentm && (
+        <select onChange={(e) => setSelectedSemm(e.target.value)}>
+          <option value="">Select Sem</option>
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
+            <option key={sem} value={sem}>
+              {sem}
+            </option>
+          ))}
+        </select>
       )}
+    </div>
+    {loading && (
+      <div className="loading-overlay">
+        <ClipLoader color="#3498db" loading={loading} size={50} />
+      </div>
+    )}
+    {/* Search bar - live search */}
+    <div className="search-bar">
+      <input
+        type="text"
+        value={searchUsername}
+        onChange={(e) => setSearchUsername(e.target.value)}
+        placeholder="Search by username"
+      />
+    </div>
+    {/* Display students */}
+    {mappings.length === 0 ? (
+      <p>No Student found.</p>
+    ) : (
+      <table
+        style={{
+          borderCollapse: "collapse",
+          width: "100%",
+          marginTop: "10px",
+          marginBottom: "10px",
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>#</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Sem</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Roll_No</th>
+            {/* Add more headers as needed */}
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mappings
+            .filter((mapping) =>
+              mapping.id.toLowerCase().includes(searchUsername.toLowerCase())
+            )
+            .map((mapping, index) => (
+              <tr key={mapping.id}>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{index + 1}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{mapping.id}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{mapping.sem}</td>
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>{mapping.roll}</td>
+                {/* Add more cells as needed */}
+                <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                  
+                  <button
+                    onClick={() => handleRemoveMapping(mapping.id)}
+                    style={{ background: 'none', color: 'black', border: 'none' }}
 
-      {option.option === "MapStudent" && (
-        <>
+                  >
+                                                          <FaTrashAlt style={{ color: 'black' }} /> {/* React Icons trash icon */}
 
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    )}
+    <div>
+      <button
+        style={{
+          backgroundColor: "#ff4d4d",
+          color: "white",
+          padding: "8px 16px",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+        onClick={handleRemoveAllDsem}
+      >
+        Remove All
+      </button>
+    </div>
 
-          <>
-            <h2>{option.option}</h2>
+    <label className="file-input-button">
+      <input type="file" onChange={handleFileChange3} />
+      Add Mapping
+    </label>
+    <button onClick={handleUpload3}>Upload</button>
+    <button
+      className="sample-button"
+      style={{ marginLeft: "5px" }}
+      onClick={handleDownloadSample3}
+    >
+      Download Sample
+    </button>
+  </>
+)}
 
-            {/* Dropdowns for selecting sem and department */}
-            <div className="dropdown-student">
-            
-            <select value={selectedDepartmentm} onChange={handleDepartmentChangem}>
-              <option value="">Select Department</option>
-              {Object.keys(departments).map((department) => (
-                <option key={department} value={department}>
-                  {department}
-                </option>
-              ))}
-            </select>
-         
-          {selectedDepartmentm && (
-                <select onChange={(e) => setSelectedSemm(e.target.value)}>
-                  <option value="">Select Sem</option>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
-                    <option key={sem} value={sem}>
-                      {sem}
-                    </option>
-                  ))}
-                </select>
-              )} 
-             
-            </div>
-            {loading && (
-              <div className="loading-overlay">
-                <ClipLoader color="#3498db" loading={loading} size={50} />
-              </div>
-            )}
-            {/* Search bar - live search */}
-            <div className="search-bar">
-              <input
-                type="text"
-                value={searchUsername}
-                onChange={(e) => setSearchUsername(e.target.value)}
-                placeholder="Search by username"
-              />
-            </div>
-            {/* Display students */}
-            {mappings.length === 0 ? (
-              <p>No Student found.</p>
-            ) : (
-              mappings
-                .filter((mapping) =>
-                  mapping.id
-                    .toLowerCase()
-                    .includes(searchUsername.toLowerCase())
-                )
-                .map((mapping, index) => (
-                  <div key={mapping.id} className="student-container">
-                    <div className="student-header">
-                      {/* Toggle details visibility */}
-                      <button
-                        onClick={() =>
-                          setMappings((prevMappings) =>
-                            prevMappings.map((m) =>
-                              m.id === mapping.id
-                                ? { ...m, showDetails: !m.showDetails }
-                                : m
-                            )
-                          )
-                        }
-                      >
-                        {mapping.showDetails ? "-" : "+"}
-                      </button>
-
-                      <div>
-                        {index + 1}. {mapping.id}
-                      </div>
-
-                      {/* Remove button */}
-                      <button
-                        onClick={() => handleRemoveMapping(mapping.id)}
-                        className="remove-button"
-                      >
-                        Remove
-                      </button>
-                    </div>
-
-                    {/* Check if details should be displayed */}
-                    {mapping.showDetails && (
-                      <div className="student-details">
-                        <div>Id: {mapping.id}</div>
-                        <div>Sem: {mapping.sem}</div>
-                        <div>Roll_No: {mapping.roll}</div>
-                        {/* Add more details as needed */}
-                      </div>
-                    )}
-                  </div>
-                ))
-            )}
-          </>
-          <div>
-            <button
-              style={{
-                backgroundColor: "#ff4d4d",
-                color: "white",
-                padding: "8px 16px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-              onClick={handleRemoveAllDsem}
-            >
-              Remove All
-            </button>
-          </div>
-
-
-
-
-          <label className="file-input-button">
-            <input type="file" onChange={handleFileChange3} />
-             Add Mapping
-          </label>
-          <button onClick={handleUpload3}>Upload</button>
-          <button className="sample-button" onClick={handleDownloadSample3}>
-            Download Sample
-          </button>
-        </>
-      )}
 
       
       {option.option === "AnnouncementMail" && (
@@ -941,6 +1005,12 @@ const GenralComponent = (option) => {
           <ClearEverything option={(option = option.option)} />
         </>
       )}
+       {option.option === "Report" && (
+        <>
+        <AdminReport />
+        </>
+      )}
+
     </div>
   );
 };

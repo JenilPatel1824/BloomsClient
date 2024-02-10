@@ -17,7 +17,7 @@ Navbar.css
   }
   
   .navbar-nav .nav-link:hover {
-    color: #007bff; /* Navbar link text color on hover */
+    color: #edf0f3; /* Navbar link text color on hover */
     background-color: transparent !important; /* Set background color to transparent on hover */
   }
   
@@ -90,4 +90,19 @@ Navbar.css
   }
   
   /* Add any additional styling based on your design requirements */
-  
+  /* NavBar.css */
+
+.user-badge {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  margin-right: 8px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333; /* Choose your preferred color */
+}

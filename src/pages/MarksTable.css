@@ -1,0 +1,56 @@
+/* MarksTable.css */
+.marks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .marks-table th, .marks-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .marks-table th {
+    background: #f8f8f8;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .marks-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .marks-table tbody tr:hover {
+    background-color: #f0f0f0;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .marks-table th:first-child,
+  .marks-table td:first-child {
+    border-left: none;
+  }
+  
+  .marks-table th:last-child,
+  .marks-table td:last-child {
+    border-right: none;
+  }
+  
+  .marks-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  .marks-table input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
