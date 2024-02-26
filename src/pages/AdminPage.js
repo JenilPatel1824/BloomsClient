@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt,faTrash } from '@fortawesome/free-solid-svg-icons';
 import  { keyframes } from 'styled-components';
 import { FaChevronDown, FaChevronUp,FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 
 import {
@@ -21,6 +23,8 @@ import GenralComponent from '../components/GenralComponent';
 let LOGOUT_TIME=3600000;
 
 const AdminPage = () => {
+  const navigate = useNavigate();
+
   const [menuHeight, setMenuHeight] = useState('auto');
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -193,8 +197,10 @@ const TotalUsers = styled.div`
       });
 
       sessionStorage.removeItem('adminToken');
-      window.location.href = '/login';
+      navigate("/login");
     } catch (error) {
+      navigate("/login");
+      sessionStorage.removeItem('adminToken');
       console.error('Logout failed:', error);
     }
   };

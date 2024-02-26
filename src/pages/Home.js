@@ -9,6 +9,7 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import UserBadge from '../components/UserBadge';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Import the ExitToApp icon
 let LOGOUT_TIME=3600000;
@@ -22,12 +23,11 @@ const features = [
   { title: 'Student Submissions', link: '/view-student-submissions', icon: faEye },
   { title: 'Reports', link: '/reports', icon: faChartBar },
   
-
-
 ];
 
 // Define functional component Home
 const Home = () => {
+  const navigate=useNavigate();
   const [username,setUsername]=useState("None");
 
   useEffect(() => {
@@ -75,10 +75,12 @@ const Home = () => {
       });
 
       sessionStorage.removeItem('authToken'); // Clear the authToken from sessionStorage
-
+      navigate("/login");
       // Redirect or perform other actions after logout
-      window.location.href = '/login';
+      
     } catch (error) {
+      sessionStorage.removeItem('authToken');
+      navigate("/login");
       console.error('Logout failed:', error);
     }
   };
@@ -113,6 +115,10 @@ const Home = () => {
     justifyContent: 'center',
     cursor: 'pointer',
     transition: 'color 0.3s ease',
+  };
+
+  const handleFeatureClick = (link) => {
+    navigate(link);
   };
 
   // Render the component
@@ -154,9 +160,9 @@ const Home = () => {
           </div>
         </nav>
         <div className="mt-3 home-content">
-          <div className="features-container">
+          <div className="features-container" >
             {features.map((feature, index) => (
-              <div className="feature" key={index}>
+              <div className="feature" key={index} onClick={() => handleFeatureClick(feature.link)}>
                 <FontAwesomeIcon icon={feature.icon} className="feature-icon" />
                 <h4>{feature.title}</h4>
                 <p>Explore and manage {feature.title.toLowerCase()} here.</p>

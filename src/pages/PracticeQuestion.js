@@ -4,10 +4,12 @@ import './PracticeQuestion.css';
 import { useParams } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 let LOGOUT_TIME=3600000;
 
 export default function PracticeQuestion() {
+  const navigate=useNavigate();
   const { subject } = useParams();
   console.log(subject);
 
@@ -95,8 +97,12 @@ export default function PracticeQuestion() {
       sessionStorage.removeItem('studentToken'); // Clear the authToken from sessionStorage
 
       // Redirect or perform other actions after logout
-      window.location.href = '/login';
+      navigate("/login");
     } catch (error) {
+
+      sessionStorage.removeItem('studentToken');
+      navigate("/login");
+
       console.error('Logout failed:', error);
     }
   };

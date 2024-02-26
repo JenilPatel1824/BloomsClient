@@ -17,7 +17,8 @@ const ClearEverything = () => {
   const handleConfirmReset = async () => {
     try {
       if (resetInput === 'Reset') {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/reset`); // Replace '/api/reset' with your actual API endpoint
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/reset`); 
+        window.alert("reset Successfull");
         console.log('Reset successful:', response.data);
       } else {
         alert('Invalid input. Please type "Reset" to confirm.');

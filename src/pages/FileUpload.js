@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './FileUpload.css';
 import NavBar from '../components/NavBar';
+import { FaDownload, FaUpload } from 'react-icons/fa';
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -19,6 +20,7 @@ const FileUpload = () => {
   });
   const [cutoff, setCutoff] = useState('');
   const [departments, setDepartments] = useState({});
+  const [uploadedFileName,setUploadedFileName]=useState('No File Selected');
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -88,6 +90,7 @@ const FileUpload = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setUploadedFileName(file.name);
     setSelectedFile(file);
   };
 
@@ -148,6 +151,7 @@ const FileUpload = () => {
       <NavBar />
       <div className="file-upload-container">
         <button className="download-button" onClick={handleDownload}>
+          <FaDownload />
           Download Sample File
         </button>
 
@@ -201,6 +205,8 @@ const FileUpload = () => {
 
         {isUploadSectionVisible && (
           <div>
+                {uploadedFileName && <p style={{ marginTop : '100px' }}>Uploaded File: {uploadedFileName}</p>}
+
             <label className="file-input-label">
               <input type="file" onChange={handleFileChange} />
               Choose File
@@ -225,7 +231,8 @@ const FileUpload = () => {
             </div>
 
             <button className="upload-button" onClick={handleUpload}>
-              Upload
+              <FaUpload />
+              
             </button>
           </div>
         )}

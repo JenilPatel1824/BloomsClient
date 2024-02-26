@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './StudentHome.css';
+import { FaInfoCircle, FaPencilAlt } from 'react-icons/fa';
 let cutoffmarkso={};
 let cocutoffflaga=[];
 let LOGOUT_TIME=3600000;
@@ -85,8 +86,10 @@ const Student_Home = () => {
       sessionStorage.removeItem('studentToken'); // Clear the authToken from sessionStorage
 
       // Redirect or perform other actions after logout
-      window.location.href = '/login';
+      navigate('/login');
     } catch (error) {
+      sessionStorage.removeItem('studentToken');
+      navigate('/login');
       console.error('Logout failed:', error);
     }
   };
@@ -368,7 +371,9 @@ const assignquestionautomatically = async (sdata) => {
                 </span>
 
                 {!checkTotal(subjectData.co1, subjectData.co2, subjectData.co3, subjectData.co4, subjectData.co5, subjectData.co6, subjectData.subject) && (
-                  <button className="practice-button" onClick={async () => await checkerforautomatic(subjectData)}>Practice</button>
+                  <button className="practice-button" onClick={async () => await checkerforautomatic(subjectData)}>
+                    <FaPencilAlt />
+                    Practice</button>
 
   )}
   

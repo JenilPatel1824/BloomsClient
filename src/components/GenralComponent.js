@@ -8,12 +8,15 @@ import ManageAcademics from "./ManageAcademics";
 import ClearEverything from "./ClearEverything";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/react";
-import { FaEdit, FaTrashAlt, FaCheck,FaTimes } from 'react-icons/fa'; // Import the icons from React Icons
+import { FaEdit, FaTrashAlt, FaCheck,FaTimes,FaUpload, FaDownload, FaRemoveFormat, FaTrash } from 'react-icons/fa'; // Import the icons from React Icons
 
 import AdminReport from "./AdminReport";
 
 const GenralComponent = (option) => {
+
   const fileInputRef = useRef(null);
+  const [uploadedFileName, setUploadedFileName] = useState('No File Selected');
+
   const [editableRow, setEditableRow] = useState(null);
 const [editedData, setEditedData] = useState({}); // To store the edited data
 
@@ -177,6 +180,7 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
 
         const data = await response2.json();
         window.alert(data.message);
+
       } catch (error) {
         console.error("Error uploading file:", error);
       }
@@ -232,18 +236,25 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
   const handleFileChange = (event) => {
     // Handle file selection and update the state
     const file = event.target.files[0];
+    console.log("File selected is: ",file);
+    setUploadedFileName(file ? file.name : null);
+
     setSelectedFile(file);
   };
 
   const handleFileChange2 = (event) => {
     // Handle file selection and update the state
     const file = event.target.files[0];
+    console.log("File selected is: ",file);
+    setUploadedFileName(file ? file.name : null);
     setSelectedFile2(file);
   };
 
   const handleFileChange3 = (event) => {
     // Handle file selection and update the state
     const file = event.target.files[0];
+    console.log("File selected is: ",file);
+    setUploadedFileName(file ? file.name : null);
     setSelectedFile3(file);
   };
 
@@ -361,49 +372,10 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
     }
   };
 
-  const handleViewStudent = async () => {
-    // Call the API endpoint for removing a student using studentId
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/viewstudent/${studentId}`,
-        {
-          method: "post",
-        }
-      );
+ 
+  
 
-      const data = await response.json();
-      setStudentDetails(data.details);
 
-      window.alert(data.message);
-    } catch (error) {
-      console.error("Error getting student:", error);
-    }
-  };
-  const handleInputChange = (e, field, id) => {
-    const updatedData = marksData.map((mark) =>
-      mark._id === id ? { ...mark, [field]: e.target.value } : mark
-    );
-    setMarksData(updatedData);
-  };
-
-  const handleViewProfessor = async () => {
-    // Call the API endpoint for removing a student using studentId
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/viewprofessor/${Pname}`,
-        {
-          method: "post",
-        }
-      );
-
-      const data = await response.json();
-      setProfessorDetails(data.details);
-
-      window.alert(data.message);
-    } catch (error) {
-      console.error("Error getting professor:", error);
-    }
-  };
 
   const fetchStudentDataToPrint = async () => {
     try {
@@ -549,53 +521,11 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
     fetchDepartments();
   }, []);
 
-  const handleEditStudent = (index) => {
-    setStudents((prevStudents) =>
-      prevStudents.map((student, i) =>
-        i === index ? { ...student, isEditing: true } : student
-      )
-    );
-  };
 
-  const handleSaveChanges = async (student) => {
-    try {
-      // Make API call to update the student data
-      const updatedStudent = await updateStudent(student);
   
-      // Update the local state with the updated student data
-      setStudents((prevStudents) =>
-        prevStudents.map((s) =>
-          s.username === updatedStudent.username ? updatedStudent : s
-        )
-      );
-    } catch (error) {
-      console.error('Error updating student:', error);
-      // Handle error, e.g., display an error message to the user
-    }
-  };
-
-  const updateStudent = async (student) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/students/${student.username}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: student.name,
-        department: student.department,
-        email: student.email,
-        mobile_no: student.mobile_no,
-        Admission_Year: student.Admission_Year,
-      }),
-    });
   
-    if (!response.ok) {
-      throw new Error(`Failed to update student: ${response.statusText}`);
-    }
   
-    return response.json();
-  };
-  
+   
 
 
 
@@ -703,12 +633,16 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         }}
         onClick={handleRemoveAllStudent}
       >
+        <FaTrash />
         Remove All
       </button>
     </div>
+    {uploadedFileName && <p style={{ marginTop : '100px', marginBottom: '-60px' }}>Uploaded File: {uploadedFileName}</p>}
+
 
     <label className="file-input-button" style={{ marginRight: '10px' }}>
       <input type="file" onChange={handleFileChange} />
+
       Add Student
     </label>
 
@@ -723,7 +657,7 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         cursor: 'pointer',
       }}
     >
-      Upload
+        <FaUpload />
     </button>
     <button
       className="sample-button"
@@ -738,7 +672,9 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         marginLeft: '10px',
       }}
     >
-      Download Sample
+              <FaDownload />
+
+       Download Sample
     </button>
   </>
 )}
@@ -841,11 +777,17 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         }}
         onClick={handleRemoveAllProfessor}
       >
+        <FaTrash />
         Remove All
       </button>
     </div>
+    {uploadedFileName && <p style={{ marginTop : '100px', marginBottom: '-60px' }}>Uploaded File: {uploadedFileName}</p>}
+
+    
     <label className="file-input-button">
+
       <input type="file" onChange={handleFileChange2} />
+
       Add Professor
     </label>
     <button onClick={handleUpload2}   style={{
@@ -855,12 +797,15 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         border: 'none',
         borderRadius: '4px',
         cursor: 'pointer',
-      }}>Upload</button>
+      }}>
+        <FaUpload />
+        </button>
     <button
       className="sample-button"
       style={{ marginLeft: "5px" }}
       onClick={handleDownloadSample2}
     >
+      <FaDownload />
       Download Sample
     </button>
   </>
@@ -969,20 +914,33 @@ const [editedData, setEditedData] = useState({}); // To store the edited data
         }}
         onClick={handleRemoveAllDsem}
       >
+        <FaTrash />
         Remove All
       </button>
     </div>
+    {uploadedFileName && <p style={{ marginTop : '100px', marginBottom: '-60px' }}>Uploaded File: {uploadedFileName}</p>}
+
 
     <label className="file-input-button">
       <input type="file" onChange={handleFileChange3} />
       Add Mapping
     </label>
-    <button onClick={handleUpload3}>Upload</button>
+    <button onClick={handleUpload3}   style={{
+        backgroundColor: '#3498db',
+        color: 'white',
+        padding: '8px 16px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+      }}>
+        <FaUpload />
+        </button>
     <button
       className="sample-button"
       style={{ marginLeft: "5px" }}
       onClick={handleDownloadSample3}
     >
+      <FaDownload />
       Download Sample
     </button>
   </>

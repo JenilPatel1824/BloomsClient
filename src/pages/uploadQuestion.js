@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import './FileUpload.css';
 import Navbar from '../components/NavBar';
+import { FaDownload, FaUpload } from 'react-icons/fa';
 
 export default function UploadQuestion() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -9,7 +10,7 @@ export default function UploadQuestion() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedCO, setSelectedCO] = useState('');
   const [departments, setDepartments] = useState({});
-  const [selectedYear, setSelectedYear] = useState('');
+  const[uploadedFileName,setUploadedFileName]=useState("No File Selected");
 
   
 
@@ -43,11 +44,7 @@ export default function UploadQuestion() {
     setSelectedSubject('');
     setSelectedCO('');
   };
-  const handleYearChange = (event) => {
-    const year = event.target.value;
-    setSelectedYear(year);
-    setSelectedSem('');
-  };
+ 
 
   const handleSemChange = (event) => {
     const sem = event.target.value;
@@ -70,6 +67,7 @@ export default function UploadQuestion() {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setUploadedFileName(file.name);
     setSelectedFile(file);
   };
 
@@ -137,7 +135,8 @@ export default function UploadQuestion() {
     <div>
          <Navbar />
     <div className="file-upload-container">
-     <button className="download-button" onClick={handleDownload}>Download Sample File</button>
+     <button className="download-button" onClick={handleDownload}>
+      <FaDownload />  Sample File</button>
 
       <h1>Question Upload Page</h1>
       <div>
@@ -213,13 +212,15 @@ export default function UploadQuestion() {
 
       {isUploadSectionVisible && (
         <div>
+                          {uploadedFileName && <p style={{ marginTop : '100px' }}>Uploaded File: {uploadedFileName}</p>}
+
           <label className="file-input-label">
             <input type="file" onChange={handleFileChange} />
             Choose File
           </label>
 
           <button className="upload-button" onClick={handleUpload}>
-            Upload
+            <FaUpload />
           </button>
         </div>
       )}

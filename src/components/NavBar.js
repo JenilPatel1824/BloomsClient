@@ -9,12 +9,14 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import UserBadge from './UserBadge';
+import { useNavigate } from 'react-router-dom';
 
 let LOGOUT_TIME=3600000;
 
 
 
 const Navbar = () => {
+  const navigate =useNavigate();
   const [username,setUsername]=useState("None");
   const features = [
     { title: 'Upload Marks', link: '/upload-mark-admin', icon: faUpload },
@@ -71,8 +73,10 @@ const Navbar = () => {
       sessionStorage.removeItem('authToken'); // Clear the authToken from sessionStorage
 
       // Redirect or perform other actions after logout
-      window.location.href = '/login';
+       navigate('/login');
     } catch (error) {
+      sessionStorage.removeItem('authToken');
+      navigate("/login");
       console.error('Logout failed:', error);
     }
   };
